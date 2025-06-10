@@ -6,10 +6,14 @@
   <title>Mint MINT Tokens</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(to right, #f0f4ff, #e0e7ff);
+      background: linear-gradient(135deg, #a78bfa, #7c3aed);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -20,29 +24,53 @@
       background: white;
       padding: 2rem;
       border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
       width: 100%;
       max-width: 420px;
       text-align: center;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     h1 {
       margin-bottom: 0.5rem;
+      font-size: 1.75rem;
+      color: #111827;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: #4b5563;
     }
 
     input[type="number"] {
       width: 100%;
-      padding: 0.6rem;
-      margin-top: 1rem;
+      padding: 0.75rem;
       font-size: 1rem;
       border-radius: 8px;
-      border: 1px solid #ccc;
+      border: 1px solid #d1d5db;
       margin-bottom: 1rem;
+      transition: border 0.2s ease;
+    }
+
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #7c3aed;
     }
 
     button {
       width: 100%;
-      background: #4f46e5;
+      background: #7c3aed;
       color: white;
       border: none;
       padding: 0.75rem;
@@ -50,10 +78,11 @@
       font-size: 1rem;
       cursor: pointer;
       font-weight: 600;
+      transition: background 0.2s ease;
     }
 
     button:hover {
-      background: #4338ca;
+      background: #6d28d9;
     }
 
     .status {
