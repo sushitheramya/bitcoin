@@ -98,13 +98,49 @@
     <p>Enter the number of tokens to mint:</p>
     <input id="mintAmount" type="number" placeholder="e.g., 100" />
     <button onclick="mintTokens()">Mint</button>
-    <div class="status" id="walletStatus">✅ Your crypto wallet is connected.</div>
+    <div class="status" id="walletStatus">🔌 Connecting to wallet...</div>
   </div>
 
+  <!-- Import Web3.js and ABI -->
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
+  <script src="mintABI.js"></script>
+
   <script>
-    function mintTokens() {
+    let web3;
+    let contract;
+    let account;
+
+    window.addEventListener("load", async () => {
+      if (window.ethereum) {
+        web3 = new Web3(window.ethereum);
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+        const accounts = await web3.eth.getAccounts();
+        account = accounts[0];
+
+        contract = new web3.eth.Contract(mintABI, mintContractAddress);
+        document.getElementById("walletStatus").innerText = "✅ Wallet Connected: " + account;
+      } else {
+        alert("Please install MetaMask.");
+      }
+    });
+
+    async function mintTokens() {
       const amount = document.getElementById("mintAmount").value;
-      alert("Minting " + amount + " MINT tokens... (hook up smart contract logic here)");
+      const parsedAmount = parseInt(amount);
+
+      if (isNaN(parsedAmount) || parsedAmount <= 0) {
+        alert("Please enter a valid number.");
+        return;
+      }
+
+      try {
+        await contract.methods.mintFunction(parsedAmount).send({ from: account });
+        alert(`✅ Successfully minted ${amount} MINT tokens!`);
+      } catch (error) {
+        console.error(error);
+        alert("❌ Error minting tokens. See console.");
+      }
     }
   </script>
 </body>
